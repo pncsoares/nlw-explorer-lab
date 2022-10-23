@@ -119,12 +119,22 @@ function handleExpiry() {
 
 function handleCardSecurityCode() {
     const securityCode = document.querySelector('#security-code');
+    const securityCodeValue = document.querySelector('.cc-security .value');
 
     const securityCodePattern = {
         mask: '000',
     };
 
-    IMask(securityCode, securityCodePattern);
+    const securityCodeMasked = IMask(securityCode, securityCodePattern);
+
+    console.log('securityCodeMasked', securityCodeMasked);
+
+    securityCodeMasked.on('accept', () => {
+        securityCodeValue.innerText =
+            securityCodeMasked.value.length > 0
+                ? securityCodeMasked.value
+                : '123';
+    });
 }
 
 let cardAdded = false;
