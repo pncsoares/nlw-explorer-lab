@@ -4,11 +4,18 @@ import Toastify from 'toastify-js';
 import './css/index.css';
 import 'toastify-js/src/toastify.css';
 
+const currentMonth = new Date().getMonth();
+const currentYear = new Date().getFullYear();
+
 const cardColors = {
     visa: ['#436D99', '#2D57F2'],
     mastercard: ['#DF6F29', '#C69347'],
     default: ['black', 'gray'],
 };
+
+const defaultCardNumber = '0000 0000 0000 0000';
+
+const toastDuration = 5000; // 5 seconds
 
 function setCardType(type) {
     /**
@@ -55,17 +62,17 @@ function handleCardNumber() {
     const cardNumberPattern = {
         mask: [
             {
-                mask: '0000 0000 0000 0000',
+                mask: defaultCardNumber,
                 regex: visaRegex,
                 cardType: 'visa',
             },
             {
-                mask: '0000 0000 0000 0000',
+                mask: defaultCardNumber,
                 regex: mastercardRegex,
                 cardType: 'mastercard',
             },
             {
-                mask: '0000 0000 0000 0000',
+                mask: defaultCardNumber,
                 cardType: 'default',
             },
         ],
@@ -84,7 +91,7 @@ function handleCardNumber() {
         cardNumberValue.innerText =
             cardNumberMasked.value.length > 0
                 ? cardNumberMasked.value
-                : '0000 0000 0000 0000';
+                : defaultCardNumber;
 
         setCardType(cardNumberMasked.masked.currentMask.cardType);
     });
@@ -105,8 +112,7 @@ function handleCardholderName() {
 function handleExpiry() {
     const expirationDate = document.querySelector('#expiration-date');
     const expirationDateValue = document.querySelector('.cc-expiration .value');
-    
-    const currentYear = new Date().getFullYear();
+
     const defaultExpirationDate = getDefaultExpirationDate();
 
     expirationDateValue.innerText = defaultExpirationDate;
@@ -131,16 +137,13 @@ function handleExpiry() {
 
     expirationDateMasked.on('accept', () => {
         expirationDateValue.innerText =
-        expirationDateMasked.value.length > 0
-            ? expirationDateMasked.value
-            : defaultExpirationDate;
+            expirationDateMasked.value.length > 0
+                ? expirationDateMasked.value
+                : defaultExpirationDate;
     });
 }
 
 function getDefaultExpirationDate() {
-    const currentMonth = new Date().getMonth();
-    const currentYear = new Date().getFullYear();
-
     return `${String(currentMonth).padStart(2, '0')}/${currentYear + 10}`;
 }
 
@@ -185,12 +188,12 @@ function handleAddCard() {
 }
 
 function showToast(message) {
-    var myToast = Toastify({
+    const newToast = Toastify({
         text: message,
-        duration: 5000,
+        duration: toastDuration,
     });
 
-    myToast.showToast();
+    newToast.showToast();
 }
 
 function init() {
