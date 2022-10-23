@@ -127,8 +127,6 @@ function handleCardSecurityCode() {
 
     const securityCodeMasked = IMask(securityCode, securityCodePattern);
 
-    console.log('securityCodeMasked', securityCodeMasked);
-
     securityCodeMasked.on('accept', () => {
         securityCodeValue.innerText =
             securityCodeMasked.value.length > 0
