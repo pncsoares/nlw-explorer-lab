@@ -11,6 +11,7 @@
 - [Node](https://nodejs.org/)
 - [Vite](https://vitejs.dev/)
 - [iMask](https://imask.js.org)
+- [toastify](https://github.com/apvarun/toastify-js/blob/master/README.md)
 
 ## Project
 
