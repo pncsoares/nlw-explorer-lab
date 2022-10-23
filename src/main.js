@@ -4,13 +4,13 @@ import Toastify from 'toastify-js';
 import './css/index.css';
 import 'toastify-js/src/toastify.css';
 
-function handleCardType() {
-    const colors = {
-        visa: ['#436D99', '#2D57F2'],
-        mastercard: ['#DF6F29', '#C69347'],
-        default: ['black', 'gray'],
-    };
+const cardColors = {
+    visa: ['#436D99', '#2D57F2'],
+    mastercard: ['#DF6F29', '#C69347'],
+    default: ['black', 'gray'],
+};
 
+function setCardType(type) {
     /**
      * 1. Select class with name cc-bg
      * 2. Select svg
@@ -26,11 +26,9 @@ function handleCardType() {
     );
     const cardLogo = document.querySelector('.cc-logo span:nth-child(2) img');
 
-    function setCardType(type) {
-        cardBackgroundColor01.setAttribute('fill', colors[type][0]);
-        cardBackgroundColor02.setAttribute('fill', colors[type][1]);
-        cardLogo.setAttribute('src', `cc-${type}.svg`);
-    }
+    cardBackgroundColor01.setAttribute('fill', cardColors[type][0]);
+    cardBackgroundColor02.setAttribute('fill', cardColors[type][1]);
+    cardLogo.setAttribute('src', `cc-${type}.svg`);
 }
 
 function handleCardNumber() {
@@ -84,9 +82,12 @@ function handleCardNumber() {
 
     cardNumberMasked.on('accept', () => {
         cardNumberValue.innerText =
-        cardNumberMasked.value.length > 0
+            cardNumberMasked.value.length > 0
                 ? cardNumberMasked.value
                 : '0000 0000 0000 0000';
+
+        console.log('cardType', cardNumberMasked.masked.currentMask.cardType);
+        setCardType(cardNumberMasked.masked.currentMask.cardType);
     });
 }
 
@@ -175,7 +176,6 @@ function showToast(message) {
 }
 
 function init() {
-    handleCardType();
     handleCardNumber();
     handleCardholderName();
     handleExpiry();
