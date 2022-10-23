@@ -9,7 +9,8 @@
         "preview": "vite preview"
     },
     "dependencies": {
-        "imask": "^6.4.3"
+        "imask": "^6.4.3",
+        "toastify-js": "^1.12.0"
     },
     "devDependencies": {
         "prettier": "2.6.2",

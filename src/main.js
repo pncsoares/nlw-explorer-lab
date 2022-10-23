@@ -1,6 +1,8 @@
 import IMask from 'imask';
+import Toastify from 'toastify-js';
 
 import './css/index.css';
+import 'toastify-js/src/toastify.css';
 
 function handleCardType() {
     const colors = {
@@ -115,12 +117,44 @@ function handleCardSecurityCode() {
     IMask(securityCode, securityCodePattern);
 }
 
+let cardAdded = false;
+
+function handleAddCard() {
+    const form = document.querySelector('form');
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+    });
+
+    const addCardButton = document.querySelector('#add-card');
+
+    addCardButton.addEventListener('click', () => {
+        if (!cardAdded) {
+            showToast('Card added successfully!');
+            cardAdded = true;
+
+            addCardButton.style.backgroundColor = '#33FF6E';
+            addCardButton.innerText = 'CARD ADDED';
+        }
+    });
+}
+
+function showToast(message) {
+    var myToast = Toastify({
+        text: message,
+        duration: 5000,
+    });
+
+    myToast.showToast();
+}
+
 function init() {
     handleCardType();
     handleCardNumber();
     handleCardholderName();
     handleExpiry();
     handleCardSecurityCode();
+    handleAddCard();
 }
 
 init();
