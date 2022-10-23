@@ -1,7 +1,5 @@
 # JS DOM | Explorer Lab
 
-[![pages-build-deployment](https://github.com/pncsoares/nlw-explorer-lab/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/pncsoares/nlw-explorer-lab/actions/workflows/pages/pages-build-deployment)
-
 ![rocket-pay](.github/project.png)
 
 ## Features
