@@ -35,6 +35,7 @@ function handleCardType() {
 
 function handleCardNumber() {
     const cardNumber = document.querySelector('#card-number');
+    const cardNumberValue = document.querySelector('.cc-number');
 
     /**
      * VISA
@@ -79,7 +80,14 @@ function handleCardNumber() {
         },
     };
 
-    IMask(cardNumber, cardNumberPattern);
+    const cardNumberMasked = IMask(cardNumber, cardNumberPattern);
+
+    cardNumberMasked.on('accept', () => {
+        cardNumberValue.innerText =
+        cardNumberMasked.value.length > 0
+                ? cardNumberMasked.value
+                : '0000 0000 0000 0000';
+    });
 }
 
 function handleCardholderName() {
