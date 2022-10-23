@@ -4,6 +4,39 @@
 
 ![rocket-pay](.github/project.png)
 
+## Features
+
+- [x] Live card image update as user types
+    - [x] Card Number
+    - [x] Cardholder Name
+    - [x] Expiry
+    - [x] CVV
+- [x] Card color update to match VISA or MASTERCARD taking into account the card card number that the user wrote
+- [x] Button to simulate card add (no data is collected 🙈)
+- [x] Toast notifications
+
+## Card types supported so far
+
+### VISA
+
+- Starts with 4 and have a total of 15 numbers
+
+![visa-card](.github/visa-card.png)
+
+### MASTERCARD
+
+- Starts with 5 followed by a number between 1 and 5 followed by two more numbers followed by 12 more numbers
+
+  OR
+
+- Starts with 22 followed by a number between 2 and 9 followed by one more number followed by 12 more numbers
+
+  OR
+
+- Starts with 2 followed by a number between 3 and 7 followed by two more numbers followed by 12 more numbers
+
+![mastercard-card](.github/mastercard-card.png)
+
 ## Technologies
 
 - [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML)
@@ -13,7 +46,7 @@
 - [Node](https://nodejs.org/)
 - [Vite](https://vitejs.dev/)
 - [iMask](https://imask.js.org)
-- [toastify](https://github.com/apvarun/toastify-js/blob/master/README.md)
+- [Toastify](https://github.com/apvarun/toastify-js/blob/master/README.md)
 
 ## Project
 
