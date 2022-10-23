@@ -82,7 +82,17 @@ function handleCardNumber() {
     IMask(cardNumber, cardNumberPattern);
 }
 
-function handleCardholderName() {}
+function handleCardholderName() {
+    const cardholderName = document.querySelector('#card-holder');
+    const cardholderNameValue = document.querySelector('.cc-holder .value');
+
+    cardholderName.addEventListener('input', () => {
+        cardholderNameValue.innerText =
+            cardholderName.value.length > 0
+                ? cardholderName.value
+                : 'NAME SURNAME';
+    });
+}
 
 function handleExpiry() {
     const expirationDate = document.querySelector('#expiration-date');
