@@ -86,7 +86,6 @@ function handleCardNumber() {
                 ? cardNumberMasked.value
                 : '0000 0000 0000 0000';
 
-        console.log('cardType', cardNumberMasked.masked.currentMask.cardType);
         setCardType(cardNumberMasked.masked.currentMask.cardType);
     });
 }
@@ -105,7 +104,12 @@ function handleCardholderName() {
 
 function handleExpiry() {
     const expirationDate = document.querySelector('#expiration-date');
+    const expirationDateValue = document.querySelector('.cc-expiration .value');
+    
     const currentYear = new Date().getFullYear();
+    const defaultExpirationDate = getDefaultExpirationDate();
+
+    expirationDateValue.innerText = defaultExpirationDate;
 
     const expirationDatePattern = {
         mask: 'MM{/}YYYY',
@@ -123,7 +127,21 @@ function handleExpiry() {
         },
     };
 
-    IMask(expirationDate, expirationDatePattern);
+    const expirationDateMasked = IMask(expirationDate, expirationDatePattern);
+
+    expirationDateMasked.on('accept', () => {
+        expirationDateValue.innerText =
+        expirationDateMasked.value.length > 0
+            ? expirationDateMasked.value
+            : defaultExpirationDate;
+    });
+}
+
+function getDefaultExpirationDate() {
+    const currentMonth = new Date().getMonth();
+    const currentYear = new Date().getFullYear();
+
+    return `${String(currentMonth).padStart(2, '0')}/${currentYear + 10}`;
 }
 
 function handleCardSecurityCode() {
