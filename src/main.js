@@ -13,9 +13,21 @@ const cardColors = {
     default: ['black', 'gray'],
 };
 
-const defaultCardNumber = '0000 0000 0000 0000';
+const toastColors = {
+    info: '#33CEFF',
+    success: '#33FF6E',
+    warning: '#FFE633',
+    error: '#FF4233',
+};
 
+const defaultCardNumber = '0000 0000 0000 0000';
 const toastDuration = 5000; // 5 seconds
+
+const cardNumber = document.querySelector('#card-number');
+const cardholderName = document.querySelector('#card-holder');
+const expirationDate = document.querySelector('#expiration-date');
+const securityCode = document.querySelector('#security-code');
+const addCardButton = document.querySelector('#add-card');
 
 function setCardType(type) {
     /**
@@ -39,7 +51,6 @@ function setCardType(type) {
 }
 
 function handleCardNumber() {
-    const cardNumber = document.querySelector('#card-number');
     const cardNumberValue = document.querySelector('.cc-number');
 
     /**
@@ -97,8 +108,7 @@ function handleCardNumber() {
     });
 }
 
-function handleCardholderName() {
-    const cardholderName = document.querySelector('#card-holder');
+function setupCardholderName() {
     const cardholderNameValue = document.querySelector('.cc-holder .value');
 
     cardholderName.addEventListener('input', () => {
@@ -110,7 +120,6 @@ function handleCardholderName() {
 }
 
 function handleExpiry() {
-    const expirationDate = document.querySelector('#expiration-date');
     const expirationDateValue = document.querySelector('.cc-expiration .value');
 
     const defaultExpirationDate = getDefaultExpirationDate();
@@ -148,7 +157,6 @@ function getDefaultExpirationDate() {
 }
 
 function handleCardSecurityCode() {
-    const securityCode = document.querySelector('#security-code');
     const securityCodeValue = document.querySelector('.cc-security .value');
 
     const securityCodePattern = {
@@ -165,43 +173,76 @@ function handleCardSecurityCode() {
     });
 }
 
-let cardAdded = false;
-
-function handleAddCard() {
+function setupAddCard() {
     const form = document.querySelector('form');
 
     form.addEventListener('submit', (e) => {
         e.preventDefault();
     });
 
-    const addCardButton = document.querySelector('#add-card');
-
-    addCardButton.addEventListener('click', () => {
-        if (!cardAdded) {
-            showToast('Card added successfully!');
-            cardAdded = true;
-
-            addCardButton.style.backgroundColor = '#33FF6E';
-            addCardButton.innerText = 'CARD ADDED';
-        }
-    });
+    addCardButton.addEventListener('click', handleAddCard);
 }
 
-function showToast(message) {
+let cardAdded = false;
+
+function handleAddCard() {
+    const canContinue = allFieldsAreFilled();
+
+    if (!canContinue) {
+        showToast('warning', 'You must fill all fields!');
+        return;
+    }
+
+    if (!cardAdded) {
+        showToast('success', 'Card added successfully!');
+        cardAdded = true;
+
+        addCardButton.style.backgroundColor = '#33FF6E';
+        addCardButton.innerText = 'CARD ADDED';
+    }
+}
+
+function allFieldsAreFilled() {
+    return (
+        cardNumber.value.length > 0 &&
+        cardholderName.value.length > 0 &&
+        expirationDate.value.length > 0 &&
+        securityCode.value.length > 0
+    );
+}
+
+const toasts = [];
+
+function showToast(type, message) {
+    if (toasts.includes(type)) {
+        return;
+    }
+
     const newToast = Toastify({
         text: message,
         duration: toastDuration,
+        className: type,
+        style: {
+            background: toastColors[type],
+            color: '#000000',
+        },
     });
 
     newToast.showToast();
+    toasts.push(type);
+
+    setTimeout(() => {
+        toasts.pop();
+    }, toastDuration);
 }
 
 function init() {
+    setupCardholderName();
+    setupAddCard();
+
     handleCardNumber();
-    handleCardholderName();
     handleExpiry();
     handleCardSecurityCode();
-    handleAddCard();
 }
 
 init();
